@@ -1,0 +1,8 @@
+<mat-nav-list *ngIf="api">
+    <mat-list-item *ngFor="let a of api">
+        <a  matLine >{{a.username}}</a>
+        <button mat-raised-button (click)="submit(a._id)" color="primary">
+            Follow
+        </button>
+    </mat-list-item>
+</mat-nav-list>

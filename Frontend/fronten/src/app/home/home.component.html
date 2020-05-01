@@ -1,0 +1,20 @@
+
+<mat-toolbar class = 'container' color="primary">
+ 
+    <span (click)=home() class="title">
+     My Application
+    </span>   
+     <button (click)=register() style="margin:10px" mat-raised-button color='secondary'>
+         Register
+      </button>
+      
+     
+       <button (click)=login() style="margin:10px" mat-raised-button color='secondary'>
+         Login
+       </button>
+   
+       
+     </mat-toolbar>
+     <router-outlet></router-outlet>
+
+  
