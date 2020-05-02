@@ -47,19 +47,30 @@ friendRouter.route('/')
 friendRouter.route('/follow')
 .options(cors.corsOptions,(req,res)=>{res.sendStatus=200;})
 .get(cors.cors,authenticate.verifyUser,(req,res,next)=>{
-    Users.find({})
-    .then((users)=>{
-        console.log(req.user._id);
-        var removeIndex = users.map(function(item) { return item._id; }).indexOf(req.user._id);
-        users.splice(removeIndex-1, 1);
-        console.log(users)
-        Users.findById(req.user._id)
-        .populate('friend.user')
-        .then((user)=>{
-            for(let u of user.friend){
-                removeIndex = users.map(function(item) { return item._id; }).indexOf(u.user._id);
-                users.splice(removeIndex-1, 1);
-            }
+    Users.findById(req.user._id)
+    .populate('friend.user')
+    .then((user)=>{
+        var arr = [];
+        console.log(user.friend)
+        for(let a of user.friend){
+            console.log(a.user)
+            arr.push(a.user._id)
+        }
+        Users.find({
+            $and : [
+                {
+                    "_id" : {
+                        $ne : req.user._id
+                    }
+                },{
+                    "_id" : {
+                        $nin : arr
+                    }
+                }
+            ]
+         }) 
+        .then((users)=>{
+           
             res.statusCode=200;
             res.setHeader('Content-Type','application/json')
             res.json(users)
@@ -70,12 +81,18 @@ friendRouter.route('/follow')
 .post(cors.cors, authenticate.verifyUser,(req,res,next)=>{
     Users.findById(req.user._id)
     .then((user)=>{
-        index = user.friend.map(function(item){return item.user;}).indexOf(req.body._id);
-        user.friend.splice(index-1,1);
-        user.save();
-        res.statusCode=200;
-        res.setHeader('Content-Type','application/json')
-        res.json(user)
+        user.friend.id(req.body._id).remove()
+        user.save()
+        .then((user)=>{
+            Users.findById(user._id)
+            .populate("friend.user")
+            .then((user)=>{
+                res.statusCode=200;
+                res.setHeader('Content-Type','application/json')
+                res.json(user)
+            })
+        })
+      
     })
 })
 

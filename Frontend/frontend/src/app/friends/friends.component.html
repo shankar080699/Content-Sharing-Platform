@@ -1,7 +1,7 @@
 <mat-nav-list *ngIf="api">
     <mat-list-item *ngFor="let a of api.friend">
         <a matLine >{{a.user.username}}</a>
-        <button mat-raised-button (click) = "submit(a.user._id)" color="primary">
+        <button mat-raised-button (click) = "submit(a._id)" color="primary">
             UnFollow
         </button>
     </mat-list-item>
