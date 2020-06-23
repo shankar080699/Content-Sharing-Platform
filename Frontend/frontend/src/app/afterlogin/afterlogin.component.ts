@@ -14,10 +14,6 @@ export class AfterloginComponent implements OnInit {
 
   ngOnInit() {
     this.api = localStorage.getItem('username')
-    var temp = this.loginService.getData();
-    this.loginService.setData(temp)
-    this.data = temp;
-    console.log(this.data)
   }
   logout(){
     localStorage.clear();

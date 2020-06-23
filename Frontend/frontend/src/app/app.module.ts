@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,9 +26,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import {ReactiveFormsModule,FormsModule} from '@angular/forms'
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {FileDropDirective,FileSelectDirective} from 'ng2-file-upload';
 import { FollowComponent } from './follow/follow.component';
+import { TokenInterceptor } from './token.interceptor';
+import { ViewfeedComponent } from './viewfeed/viewfeed.component';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,9 @@ import { FollowComponent } from './follow/follow.component';
     SearchComponent,
     FileSelectDirective,
     FileDropDirective,
-    FollowComponent
+    FollowComponent,
+    ViewfeedComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +70,14 @@ import { FollowComponent } from './follow/follow.component';
     MatProgressBarModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{
+    provide : HTTP_INTERCEPTORS,
+    useClass : TokenInterceptor,
+    multi : true
+  },{ 
+    provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

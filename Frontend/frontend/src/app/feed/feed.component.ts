@@ -1,43 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewChild, ElementRef  } from '@angular/core';
-import {FormControl,FormBuilder, FormGroup} from '@angular/forms';
-import {HttpClient,HttpHeaders} from '@angular/common/http'
+import {HttpClient} from '@angular/common/http'
+
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit {
-  @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;files  = []; 
-  constructor(private http : HttpClient, private formBuilder : FormBuilder) { }
-  uploadForm : FormGroup
-
+  files;
+  img;
+  constructor(private http : HttpClient) { }
   ngOnInit() {
-    this.uploadForm = this.formBuilder.group({
-      profile : ['']
-    })  
+    this.http.get("http://localhost:3000/upload/followers_view")
+      .subscribe(data=>{
+              let files = data as string[];
+              console.log(files)
+              var arr = []
+              for(let d of files){
+                  for(let f of d['files']){
+                    // console.log(d['user'])
+                    // console.log(f['filename'])
+                    const postData = {
+                      "user" : d['user'],
+                      "filename" : f['filename']
+                    } 
+                    this.http.post('http://localhost:3000/upload/view',postData).subscribe(
+                      d => {
+                         var dat = d as string[];
+                         console.log(dat)
+                         arr.push(dat);
+                      }
+                    )
+                  } 
+                }
+                this.img = arr
+                console.log(this.img)
+              } ,
+        (error) => console.log(error)
+      )
   }
-  onFileSelect(event){
-      const file = event.target.files[0];
-      this.uploadForm.get('profile').setValue(file);
-  }
-  onSubmit(){
-    const formData = new FormData();
-    formData.append('imageFile',this.uploadForm.get('profile').value);
-    
-    var token = localStorage.getItem('token')
-    console.log(token)
-    
-    const httpOptions = {
-      headers : new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization' : 'Bearer '+token
-      })
-    }
-    this.http.post<any>('http://localhost:3000/upload',formData,httpOptions).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    )
-  }
+ 
 }

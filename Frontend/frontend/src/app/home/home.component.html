@@ -1,20 +1,22 @@
 
-<mat-toolbar class = 'container' color="primary">
+<mat-toolbar color="primary">
+ <mat-toolbar-row>
+  <h1 (click)=home() >
+    Share Circle
+  </h1>
+  <span class="space"></span>   
+
+   <button (click)=register() style="margin:10px" mat-raised-button color='secondary'>
+     Register
+   </button>
+   <button  (click)=login() style="margin:10px" mat-raised-button color='secondary'>
+     Login
+   </button>
  
-    <span (click)=home() class="title">
-     My Application
-    </span>   
-     <button (click)=register() style="margin:10px" mat-raised-button color='secondary'>
-         Register
-      </button>
-      
-     
-       <button (click)=login() style="margin:10px" mat-raised-button color='secondary'>
-         Login
-       </button>
-   
-       
-     </mat-toolbar>
-     <router-outlet></router-outlet>
+ </mat-toolbar-row>
+</mat-toolbar>
+
+  
+<router-outlet></router-outlet>
 
   

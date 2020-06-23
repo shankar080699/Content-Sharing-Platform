@@ -8,6 +8,8 @@
       <a mat-list-item routerLink='feed'>Feed</a>
       <a mat-list-item routerLink="friends">Following Users</a>
       <a mat-list-item routerLink="follow">Follow Users</a>
+      <a mat-list-item routerLink="viewfeed">View Feed</a>
+      <a mat-list-item routerLink="upload">Upload</a> 
     </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -17,7 +19,7 @@
           <!-- *ngIf="isHandset$ | async" -->
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
-        <span> My Application</span>
+        <span>Share Circle</span>
         <span class="example-spacer"></span>
         <button mat-raised-button *ngIf="api">{{api}} </button>
         <button mat-raised-button (click)="logout()">Logout</button>

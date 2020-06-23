@@ -21,7 +21,7 @@ export class FollowComponent implements OnInit {
     }
   
    
-    this.http.get("http://localhost:3000/friend/follow", httpOptions)
+    this.http.get("http://localhost:3000/friend/follow")
       .subscribe(data=>{
               this.api = data as string[];
               console.log(this.api)
@@ -42,7 +42,7 @@ export class FollowComponent implements OnInit {
        user : id
     }
    
-    this.http.post("http://localhost:3000/friend", postData,httpOptions)
+    this.http.post("http://localhost:3000/friend", postData)
       .subscribe(data=>{
               console.log(data);
               } ,

@@ -1,0 +1,23 @@
+<div class="container">
+    <div>
+        <mat-list-item>
+            <form [formGroup]="uploadForm" >
+                <input type="file" name="profile" (change) = "onFileSelect($event)" /> <br>
+            
+            </form>
+            <button (click)="onSubmit()">Upload Image</button>
+        </mat-list-item>
+     
+    </div>
+<!--     
+    <div>
+        <button mat-raised-button (click)="view()" color="primary">
+            View Image
+            
+        </button>
+        <div *ngIf = "api"  >
+            <img width="50" height="50" [src] = "api.imgurl" />
+        </div>
+        
+    </div> -->
+</div>

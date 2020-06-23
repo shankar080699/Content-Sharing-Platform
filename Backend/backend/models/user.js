@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
+
+const feedSchema = new Schema({
+    file : {
+        type : String,
+        default : ''
+    }
+}); 
 const friendSchema = new Schema({
     user : {
         type : mongoose.Schema.Types.ObjectId,
@@ -31,7 +38,8 @@ const User = new Schema({
         type : Boolean,
         default : false
     },
-    friend : [friendSchema]
+    friend : [friendSchema],
+    feed : [feedSchema]
 })
 
 User.plugin(passportLocalMongoose);

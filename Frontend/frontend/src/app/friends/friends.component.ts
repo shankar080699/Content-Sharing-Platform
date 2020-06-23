@@ -26,7 +26,7 @@ export class FriendsComponent implements OnInit {
     }
   
    
-    this.http.get("http://localhost:3000/friend", httpOptions)
+    this.http.get("http://localhost:3000/friend")
       .subscribe(data=>{
               this.api = data as string[];
               console.log(this.api)
@@ -48,7 +48,7 @@ export class FriendsComponent implements OnInit {
        _id : id
     }
    
-    this.http.post("http://localhost:3000/friend/follow", postData,httpOptions)
+    this.http.post("http://localhost:3000/friend/follow",postData)
       .subscribe(data=>{
               console.log(data);
               } ,

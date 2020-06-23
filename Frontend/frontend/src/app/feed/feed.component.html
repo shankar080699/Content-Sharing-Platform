@@ -1,5 +1,27 @@
-<form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
-    <input type="file" name="profile" (change) = "onFileSelect($event)" /> <br>
-    <button type="submit">Upload Image</button>
-
-</form>
+<div class="container body"> 
+    <div *ngIf = "img" style="text-align: center;">
+      
+          <div *ngFor="let api of img"> 
+            <div class="row">
+              <div class="col-3">
+              </div>
+              <div class="col-6">
+                <mat-card style="margin-top: 50px;height: 400px;">
+                  <mat-card-header  color="primary">
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{username}}</mat-card-title>
+                  </mat-card-header>
+                  <img mat-card-image [src] = "api.imgurl" alt="Photo of a Shiba Inu">
+                  <mat-card-content>
+                  </mat-card-content>
+                  <mat-card-actions>
+                  </mat-card-actions>
+                </mat-card>
+                </div>
+              <div class="col-3">
+              </div>
+            </div>
+          </div>
+      
+    </div>
+  </div>
